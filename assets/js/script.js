@@ -38,8 +38,26 @@ var searchHandler = function(event) {
 };
 
 var displayWeather = function(info, searchTerm){
+    if (info.length === 0){
+        alert("There is nothing to show");
+    }
+
+    // Add city to h2 so user can see which city they searched
+    var cityTitle = document.querySelector("#forecast-cityName");
+    var todaysDate = moment().format("MM/DD/YYYY");
+    var presentWeatherIcon = document.createElement("img");
+    presentWeatherIcon.setAttribute("src", "https://api.openweathermap.org/img/w/" + info.weather[0].icon + ".png");
+
+    cityTitle.textContent = searchTerm + " (" + todaysDate + ") ";
+    cityTitle.appendChild(presentWeatherIcon);
+
+    var presentTemp = document.querySelector("#forecast-present-temp");
+    var presentHumidity = document.querySelector("#forecast-present-humidity");
+    var presentWindSpeed = document.querySelector("#forecast-present-speed");
+    var presentUVIndex = document.querySelector("#forecast-present-uv");
     console.log(info);
-    console.log(searchTerm);
+    
+
 };
 
 searchFormEl.addEventListener("submit", searchHandler);
