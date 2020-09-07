@@ -1,6 +1,33 @@
 var searchFormEl = document.querySelector("#search-input-query");
 var searchInputEl = document.querySelector("#search-input");
 var forecastContainerEl = document.querySelector("#forecast-future-list");
+var cityHistoryListEl = document.querySelector("#search-history-list");
+var cities = [];
+
+var loadHistory = function(){
+    var savedCities = localStorage.getItem("cities");
+
+    if(savedCities === null){
+        return false;
+    }
+
+    savedCities = JSON.parse(savedCities);
+
+    for (var i = 0; i < savedCities.length; i++)
+    {
+        var cityHistoryListItemEl = document.createElement("li");
+        cityHistoryListItemEl.className = "list-group-item";
+        cityHistoryListItemEl.id = "search-history-item";
+        var cityHistoryLinkEl = document.createElement("a");
+        cityHistoryLinkEl.className = "history-link";
+        cityHistoryLinkEl.textContent = savedCities[i];
+        cityHistoryListItemEl.appendChild(cityHistoryLinkEl);
+        console.log(cityHistoryListItemEl);
+        cityHistoryListEl.appendChild(cityHistoryListItemEl);
+    }
+
+
+};
 
 var getWeather = function(city) {
     //format the weather link
@@ -29,7 +56,15 @@ var getWeather = function(city) {
                 displayFutureWeather(data, city);
             })
         }
+        else{
+            alert("Error: " + response.statusText);
+        }
     })
+    .catch(function(error){
+        alert("Unable to retrieve Weather Data for your area at this time");
+    })
+
+    cityHistory(city);
 };
 
 var searchHandler = function(event) {
@@ -120,7 +155,9 @@ var displayFutureWeather = function(info, searchTerm){
     if (info.length === 0){
         alert("There is nothing to show");
     }
-    console.log(info);
+
+    clearForecastContainer();
+
     var array = {};
     var time = '';
     for(var i = 0; i < info.list.length; i++){
@@ -167,4 +204,21 @@ var displayFutureWeather = function(info, searchTerm){
     }
 }
 
+//used to clear forecastContainer to add new elements
+var clearForecastContainer = function(){
+    while(forecastContainerEl.firstChild){
+        forecastContainerEl.removeChild(forecastContainerEl.firstChild);
+    };
+}
+
+var cityHistory = function(searchTerm){
+    cities.push(searchTerm);
+    storeHistory(cities);
+};
+
+var storeHistory = function(cityList){
+    localStorage.setItem("cities", JSON.stringify(cityList));
+};
+
 searchFormEl.addEventListener("submit", searchHandler);
+window.addEventListener("load", loadHistory);
