@@ -1,6 +1,6 @@
 :root {
     --primary: #38302e;
-    --secondary: blue;
+    --secondary: #29508b;
     --tertiary: #ccdad1;
     --border-radius: .3rem;
 }
@@ -40,4 +40,17 @@ li a{
 li a:hover{
     text-decoration: none;
     color: var(--secondary);
+}
+
+.card-header {
+    background-color: var(--secondary);
+    color: white;
+}
+
+.forecast-future-card img{
+    margin: 10px 0;
+}
+
+.card-title {
+    font-weight: bold;
 }
