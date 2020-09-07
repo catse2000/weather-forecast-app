@@ -1,15 +1,17 @@
 var searchFormEl = document.querySelector("#search-input-query");
 var searchInputEl = document.querySelector("#search-input");
+var forecastContainerEl = document.querySelector("#forecast-future-list");
 
 var getWeather = function(city) {
     //format the weather link
-    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=9e1fdaa540fdf17e456714b519cc5694";
-    
+    var apiUrlPresent = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=9e1fdaa540fdf17e456714b519cc5694";
+    var apiUrlFuture = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=9e1fdaa540fdf17e456714b519cc5694";
+
     //make a request to the url
-    fetch(apiUrl).then(function(response){
+    fetch(apiUrlPresent).then(function(response){
         if(response.ok){
             response.json().then(function(data){
-                displayWeather(data, city);
+                displayPresentWeather(data, city);
             });
         }
         else{
@@ -19,6 +21,14 @@ var getWeather = function(city) {
     })
     .catch(function(error){
         alert("Unable to retrieve Weather Data for your area at this time");
+    })
+
+    fetch(apiUrlFuture).then(function(response){
+        if(response.ok){
+            response.json().then(function(data){
+                displayFutureWeather(data, city);
+            })
+        }
     })
 };
 
@@ -37,7 +47,7 @@ var searchHandler = function(event) {
     }
 };
 
-var displayWeather = function(info, searchTerm){
+var displayPresentWeather = function(info, searchTerm){
     if (info.length === 0){
         alert("There is nothing to show");
     }
@@ -59,7 +69,6 @@ var displayWeather = function(info, searchTerm){
     presentHumidity.textContent = info.main.humidity + " %";
     presentWindSpeed.textContent = info.wind.speed + " MPH";
     getUVIndex(info); 
-    
 
 };
 
@@ -106,4 +115,56 @@ var getUVIndex = function (cityData){
     })
 
 }
+
+var displayFutureWeather = function(info, searchTerm){
+    if (info.length === 0){
+        alert("There is nothing to show");
+    }
+    console.log(info);
+    var array = {};
+    var time = '';
+    for(var i = 0; i < info.list.length; i++){
+        time = info.list[i].dt_txt.substring(10).trim();
+        if (time === "12:00:00"){
+            var rawDate = info.list[i].dt;
+            var convertedDate = new Date(rawDate * 1000).toLocaleDateString("en-US");
+            var icon = info.list[i].weather[0].icon;
+            var temp = info.list[i].main.temp;
+            var humidity = info.list[i].main.humidity;
+
+            var forecastCardEl = document.createElement("div");
+            forecastCardEl.className = "card col-12 col-md-5 col-xl m-2 p-0 forecast-future-card";
+            
+            var forecastCardHeaderEl = document.createElement("p");
+            forecastCardHeaderEl.className = "card-header";
+            forecastCardHeaderEl.textContent = convertedDate;
+            
+            var forecastCardBodyEl = document.createElement("div");
+            forecastCardBodyEl.className = "card-body";
+            
+            var forecastIcon = document.createElement("img");
+            forecastIcon.setAttribute("src", "https://api.openweathermap.org/img/w/" + icon + ".png")
+            
+            var forecastTempPEl = document.createElement("p");
+            forecastTempPEl.innerHTML = "Temp: " + temp + " &#176;";
+            var forecastTempSpanEl = document.createElement("span");
+            forecastTempSpanEl.id = "forecast-future-temp";
+            forecastTempPEl.appendChild(forecastTempSpanEl);
+            
+            var forecastHumPEl = document.createElement("p");
+            forecastHumPEl.textContent = "Humidity: " + humidity + " %";
+            var forecastHumiditySpanEl = document.createElement("span");
+            forecastHumiditySpanEl.id = "forecast-future-humidity";
+            forecastHumPEl.appendChild(forecastHumiditySpanEl);
+
+            forecastCardBodyEl.appendChild(forecastIcon);
+            forecastCardBodyEl.appendChild(forecastTempPEl);
+            forecastCardBodyEl.appendChild(forecastHumPEl);
+            forecastCardEl.appendChild(forecastCardHeaderEl);
+            forecastCardEl.appendChild(forecastCardBodyEl);
+            forecastContainerEl.appendChild(forecastCardEl);
+        }
+    }
+}
+
 searchFormEl.addEventListener("submit", searchHandler);
