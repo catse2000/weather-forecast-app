@@ -21,72 +21,29 @@
                 <div id="search" class="m-0 col-12 col-sm-12 col-md-4 bg-light">
                     <div id="search-input-container">
                         <p>Search for a City</p>
-                        <div id="search-input-query">
-                            <input name="city" id="city" type="text" autofocus="true" class="search-input col-8" />
-                            <button type="submit" class="btn"><i class="fas fa-search"></i></button>
-                        </div>
+                        <form id="search-input-query">
+                            <input name="city" id="search-input" type="text" autofocus="true" class="col-8" />
+                            <button type="submit" class="btn" id="search-btn"><i class="fas fa-search"></i></button>
+                        </form>
                         <div class="card" id="search-history-container">
                             <ul class="list-group list-group-flush" id="search-history-list">
-                                <li class="list-group-item" id="search-history-item"><a href="#">Test</a></li>
-                                <li class="list-group-item" id="search-history-item"><a href="#">Test 2</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div id="forecast" class="col-12 col-sm-12 col-md-8 mt-3">
                     <div class="card" id="forecast-present-container">
-                        <h2 class="card-header">Atlanta (08/15/2019) <img src="https://via.placeholder.com/40"></h2>
+                        <h2 class="card-header"></h2>
                         <div class="card-body" id="">
-                            <p>Temperature: <span id="forecast-present-temp">90.9 F</span></p>
-                            <p>Humidity: <span id="forecast-present-humidity">41 %</span></p>
-                            <p>Wind Speed: <span id="forecast-present-speed">4.7 MPH</span></p>
-                            <p>UV Index: <span id="forecast-present-uv">9.49</span></p>
+                            <p>Temperature: <span id="forecast-present-temp"></span></p>
+                            <p>Humidity: <span id="forecast-present-humidity"></span></p>
+                            <p>Wind Speed: <span id="forecast-present-speed"></span></p>
+                            <p>UV Index: <span id="forecast-present-uv"></span></p>
                         </div>
                     </div>
                     <div class="mt-3" id="forecast-future-container">
                         <h3>5-Day Forecast:</h3>
-                        <div class="row m-auto" id="forecast-future-list">
-                            <div class="card col-12 col-md-5 col-xl m-2 p-0 forecast-future-card">
-                                <p class="card-header">08/16/2019</p>
-                                <div class="card-body">
-                                    <img src="https://via.placeholder.com/75">
-                                    <p>Temp: <span id="forecast-future-temp">86.84 F</span></p>
-                                    <p>Humidity: <span id="forecast-future-humidity">43 %</span></p>
-                                </div>
-                            </div>
-                            <div class="card col-12 col-md-5 col-xl m-2 p-0 forecast-future-card">
-                                <p class="card-header">08/16/2019</p>
-                                <div class="card-body">
-                                    <img src="https://via.placeholder.com/75" />
-                                    <p>Temp: <span id="forecast-future-temp">86.84 F</span></p>
-                                    <p>Humidity: <span id="forecast-future-humidity">43 %</span></p>
-                                </div>
-                            </div>
-                            <div class="card col-12 col-md-5 col-xl m-2 p-0 forecast-future-card">
-                                <p class="card-header">08/16/2019</p>
-                                <div class="card-body">
-                                    <img src="https://via.placeholder.com/75" />
-                                    <p>Temp: <span id="forecast-future-temp">86.84 F</span></p>
-                                    <p>Humidity: <span id="forecast-future-humidity">43 %</span></p>
-                                </div>
-                            </div>
-                            <div class="card col-12 col-md-5 col-xl m-2 p-0 forecast-future-card">
-                                <p class="card-header">08/16/2019</p>
-                                <div class="card-body">
-                                    <img src="https://via.placeholder.com/75" />
-                                    <p>Temp: <span id="forecast-future-temp">86.84 F</span></p>
-                                    <p>Humidity: <span id="forecast-future-humidity">43 %</span></p>
-                                </div>
-                            </div>
-                            <div class="card col-12 col-md-5 col-xl m-2 p-0 forecast-future-card">
-                                <p class="card-header">08/16/2019</p>
-                                <div class="card-body">
-                                    <img src="https://via.placeholder.com/75" />
-                                    <p>Temp: <span id="forecast-future-temp">86.84 F</span></p>
-                                    <p>Humidity: <span id="forecast-future-humidity">43 %</span></p>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="row m-auto" id="forecast-future-list"></div>
                     </div>
                 </div>
             </div>

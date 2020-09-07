@@ -1,7 +1,8 @@
 :root {
-    --primary: #38302e;
-    --secondary: #29508b;
-    --tertiary: #ccdad1;
+    --dark-grey: #38302e;
+    --dark-blue: #29508b;
+    --light-grey: #ccdad1;
+    --light-blue: #90b4eb;
     --border-radius: .3rem;
 }
 
@@ -24,12 +25,17 @@ body{
     margin-bottom: 15px;
 }
 .btn{
-    background-color: var(--secondary);
+    background-color: var(--dark-blue);
     color: white;
 }
 
 .btn, .search-input{
     height: 35px;
+}
+
+.btn:hover{
+    background-color: var(--light-blue);
+    color: var(--dark-blue);
 }
 
 li a{
@@ -39,11 +45,11 @@ li a{
 
 li a:hover{
     text-decoration: none;
-    color: var(--secondary);
+    color: var(--dark-blue);
 }
 
 .card-header {
-    background-color: var(--secondary);
+    background-color: var(--dark-blue);
     color: white;
 }
 
