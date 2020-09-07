@@ -60,3 +60,27 @@ li a:hover{
 .card-title {
     font-weight: bold;
 }
+
+#forecast-present-uv {
+    padding: 0 10px;
+    border-radius: 7px;
+}
+.yellow{
+    background-color: yellow;
+    color: black;
+}
+
+.orange{
+    background-color: orange;
+    color: black;
+}
+
+.red{
+    background-color: red;
+    color: white;
+}
+
+.violet{
+    background-color: violet;
+    color: black;
+}
