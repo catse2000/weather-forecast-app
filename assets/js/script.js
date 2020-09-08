@@ -1,23 +1,29 @@
+//global variables
 var searchFormEl = document.querySelector("#search-input-query");
 var searchInputEl = document.querySelector("#search-input");
 var forecastContainerEl = document.querySelector("#forecast-future-list");
 var cityHistoryListEl = document.querySelector("#search-history-list");
 var cities = [];
 
+//called when application loads
 var loadHistory = function(){
-    cities = JSON.parse(localStorage.getItem("cities"));
+    cities = JSON.parse(localStorage.getItem("cities")); // pull local storage and place in array
 
-    if(cities === null){
-        cities = [];
+    if(cities === null){ //check if storage is empty
+        cities = []; //if storage is empty, initialize array
         return false;
     }
-
-    for (var i = 0; i < cities.length; i++)
-    {
-        addCityHistory(cities[i]);
+    else{
+        for (var i = 0; i < cities.length; i++) // call addCityHistory function if cities has values
+        {
+            addCityHistory(cities[i]);
+        }
     }
+
+
 };
 
+// generates <li> elements and appends to <ul> element on index.html to show history of cities searched
 var addCityHistory = function (city){
     var cityHistoryListItemEl = document.createElement("li");
     cityHistoryListItemEl.className = "list-group-item";
@@ -30,15 +36,18 @@ var addCityHistory = function (city){
     cityHistoryListItemEl.appendChild(cityHistoryLinkEl);
     cityHistoryListEl.appendChild(cityHistoryListItemEl);
     
-    cityHistory(city);
+    cityHistory(city); //call function cityHistory
 };
 
+// populates today's weather based on city entered
 var getWeather = function(city) {
     //format the weather link
+    //generate url for present weather
     var apiUrlPresent = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=9e1fdaa540fdf17e456714b519cc5694";
+    //generate url for future weather
     var apiUrlFuture = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=9e1fdaa540fdf17e456714b519cc5694";
 
-    //make a request to the url
+    //fetch data for present weather
     fetch(apiUrlPresent).then(function(response){
         if(response.ok){
             response.json().then(function(data){
@@ -55,6 +64,7 @@ var getWeather = function(city) {
         alert("Unable to retrieve Weather Data for your area at this time");
     })
 
+    //fetch data for future weather
     fetch(apiUrlFuture).then(function(response){
         if(response.ok){
             response.json().then(function(data){
@@ -71,6 +81,7 @@ var getWeather = function(city) {
 
 };
 
+// function called when the "search" button is called
 var searchHandler = function(event) {
     event.preventDefault();
     
@@ -95,11 +106,12 @@ var displayPresentWeather = function(info, searchTerm){
 
     // Add city to h2 so user can see which city they searched
     var cityTitle = document.querySelector("#forecast-cityName");
-    var todaysDate = moment().format("MM/DD/YYYY");
+    var rawDate = info.dt;
+    var convertedDate = new Date(rawDate * 1000).toLocaleDateString("en-US");
     var presentWeatherIcon = document.createElement("img");
     presentWeatherIcon.setAttribute("src", "https://api.openweathermap.org/img/w/" + info.weather[0].icon + ".png");
 
-    cityTitle.textContent = searchTerm + " (" + todaysDate + ") ";
+    cityTitle.textContent = searchTerm + " (" + convertedDate + ") ";
     cityTitle.appendChild(presentWeatherIcon);
 
     var presentTemp = document.querySelector("#forecast-present-temp");
@@ -218,11 +230,13 @@ var clearForecastContainer = function(){
 }
 
 var cityHistory = function(searchTerm){
+
     cities.push(searchTerm);
     storeHistory(cities);
 };
 
 var storeHistory = function(cityList){
+    console.log("storeHistory");
     localStorage.setItem("cities", JSON.stringify(cityList));
 };
 
