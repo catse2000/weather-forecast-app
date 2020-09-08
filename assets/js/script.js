@@ -5,28 +5,31 @@ var cityHistoryListEl = document.querySelector("#search-history-list");
 var cities = [];
 
 var loadHistory = function(){
-    var savedCities = localStorage.getItem("cities");
+    var savedCities = JSON.parse(localStorage.getItem("cities"));
 
     if(savedCities === null){
         return false;
     }
 
-    savedCities = JSON.parse(savedCities);
-
     for (var i = 0; i < savedCities.length; i++)
     {
-        var cityHistoryListItemEl = document.createElement("li");
-        cityHistoryListItemEl.className = "list-group-item";
-        cityHistoryListItemEl.id = "search-history-item";
-        var cityHistoryLinkEl = document.createElement("a");
-        cityHistoryLinkEl.className = "history-link";
-        cityHistoryLinkEl.textContent = savedCities[i];
-        cityHistoryListItemEl.appendChild(cityHistoryLinkEl);
-        console.log(cityHistoryListItemEl);
-        cityHistoryListEl.appendChild(cityHistoryListItemEl);
+        addCityHistory(savedCities[i]);
     }
+    
 
+};
 
+var addCityHistory = function (city){
+    var cityHistoryListItemEl = document.createElement("li");
+    cityHistoryListItemEl.className = "list-group-item";
+    cityHistoryListItemEl.id = "search-history-item";
+    var cityHistoryLinkEl = document.createElement("a");
+    cityHistoryLinkEl.setAttribute("href", "#");
+    cityHistoryLinkEl.className = "history-link";
+    cityHistoryLinkEl.textContent = city;
+    cityHistoryListItemEl.appendChild(cityHistoryLinkEl);
+    cityHistoryListEl.appendChild(cityHistoryListItemEl);
+    cityHistoryLinkEl.addEventListener("click", eventHandler);
 };
 
 var getWeather = function(city) {
@@ -80,6 +83,8 @@ var searchHandler = function(event) {
     else{
         alert("Please enter a city");
     }
+
+    addCityHistory(cityName);
 };
 
 var displayPresentWeather = function(info, searchTerm){
@@ -218,6 +223,12 @@ var cityHistory = function(searchTerm){
 
 var storeHistory = function(cityList){
     localStorage.setItem("cities", JSON.stringify(cityList));
+};
+
+var eventHandler = function(){
+    var city = event.target.textContent;
+    addCityHistory(city);
+    getWeather(city);
 };
 
 searchFormEl.addEventListener("submit", searchHandler);
