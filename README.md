@@ -32,3 +32,12 @@
 * Created save function to store data in local storage
 
 ### Have webpage locate local weather and show information automatically
+
+## Finished Application Links
+[Github Link](https://github.com/catse2000/weather-forecast-app)
+
+[Published Link](https://catse2000.github.io/weather-forecast-app/)
+
+## Application Screenshot
+![Finished Application Screenshot](./assets/img/screenshot.png)
+
