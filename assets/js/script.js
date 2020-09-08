@@ -29,7 +29,8 @@ var addCityHistory = function (city){
     cityHistoryLinkEl.addEventListener("click", eventHandler);
     cityHistoryListItemEl.appendChild(cityHistoryLinkEl);
     cityHistoryListEl.appendChild(cityHistoryListItemEl);
-
+    
+    cityHistory(city);
 };
 
 var getWeather = function(city) {
@@ -42,6 +43,7 @@ var getWeather = function(city) {
         if(response.ok){
             response.json().then(function(data){
                 displayPresentWeather(data, city);
+                addCityHistory(city);
             });
         }
         else{
@@ -67,7 +69,6 @@ var getWeather = function(city) {
         alert("Unable to retrieve Weather Data for your area at this time");
     })
 
-    cityHistory(city);
 };
 
 var searchHandler = function(event) {
@@ -84,7 +85,7 @@ var searchHandler = function(event) {
         alert("Please enter a city");
     }
 
-    addCityHistory(cityName);
+
 };
 
 var displayPresentWeather = function(info, searchTerm){
@@ -227,7 +228,6 @@ var storeHistory = function(cityList){
 
 var eventHandler = function(){
     var city = event.target.textContent;
-    addCityHistory(city);
     getWeather(city);
 };
 
