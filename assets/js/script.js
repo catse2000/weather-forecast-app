@@ -29,7 +29,7 @@ var addCityHistory = function (city){
     cityHistoryLinkEl.addEventListener("click", eventHandler);
     cityHistoryListItemEl.appendChild(cityHistoryLinkEl);
     cityHistoryListEl.appendChild(cityHistoryListItemEl);
-
+    
     cityHistory(city);
 };
 
