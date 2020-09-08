@@ -15,8 +15,6 @@ var loadHistory = function(){
     {
         addCityHistory(cities[i]);
     }
-    
-
 };
 
 var addCityHistory = function (city){
