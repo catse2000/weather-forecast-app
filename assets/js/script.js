@@ -36,7 +36,7 @@ var addCityHistory = function (city){
     cityHistoryListItemEl.appendChild(cityHistoryLinkEl);
     cityHistoryListEl.appendChild(cityHistoryListItemEl);
     
-    cityHistory(city); //call function cityHistory
+
 };
 
 // populates today's weather based on city entered
@@ -52,7 +52,6 @@ var getWeather = function(city) {
         if(response.ok){
             response.json().then(function(data){
                 displayPresentWeather(data, city);
-                addCityHistory(city);
             });
         }
         else{
@@ -122,7 +121,9 @@ var displayPresentWeather = function(info, searchTerm){
     presentHumidity.textContent = info.main.humidity + " %";
     presentWindSpeed.textContent = info.wind.speed + " MPH";
     getUVIndex(info); 
-
+    cities.push(searchTerm);
+    storeHistory(cities);
+    addCityHistory(searchTerm);
 };
 
 var getUVIndex = function (cityData){
@@ -228,12 +229,6 @@ var clearForecastContainer = function(){
         forecastContainerEl.removeChild(forecastContainerEl.firstChild);
     };
 }
-
-var cityHistory = function(searchTerm){
-
-    cities.push(searchTerm);
-    storeHistory(cities);
-};
 
 var storeHistory = function(cityList){
     console.log("storeHistory");
