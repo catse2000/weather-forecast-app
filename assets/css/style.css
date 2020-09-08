@@ -1,3 +1,5 @@
+
+/* Commonly used colors and styles */
 :root {
     --dark-grey: #38302e;
     --dark-blue: #29508b;
@@ -6,6 +8,7 @@
     --border-radius: .3rem;
 }
 
+/* General Styling */
 * {
     box-sizing: border-box;
 }
@@ -24,6 +27,8 @@ body{
 #search-input-query{
     margin-bottom: 15px;
 }
+
+/* search button stylings */
 .btn{
     background-color: var(--dark-blue);
     color: white;
@@ -38,6 +43,7 @@ body{
     color: var(--dark-blue);
 }
 
+/* Styling for history list */
 li a{
     text-decoration: none;
     color: black;
@@ -48,6 +54,7 @@ li a:hover{
     color: var(--dark-blue);
 }
 
+/* Styling for 5-day forecast cards */
 .card-header {
     background-color: var(--dark-blue);
     color: white;
@@ -61,6 +68,7 @@ li a:hover{
     font-weight: bold;
 }
 
+/* styling for UV index */
 #forecast-present-uv {
     padding: 0 10px;
     border-radius: 7px;
