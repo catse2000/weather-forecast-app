@@ -5,15 +5,15 @@ var cityHistoryListEl = document.querySelector("#search-history-list");
 var cities = [];
 
 var loadHistory = function(){
-    var savedCities = JSON.parse(localStorage.getItem("cities"));
+    cities = JSON.parse(localStorage.getItem("cities"));
 
-    if(savedCities === null){
+    if(cities === null){
         return false;
     }
 
-    for (var i = 0; i < savedCities.length; i++)
+    for (var i = 0; i < cities.length; i++)
     {
-        addCityHistory(savedCities[i]);
+        addCityHistory(cities[i]);
     }
     
 
@@ -27,9 +27,10 @@ var addCityHistory = function (city){
     cityHistoryLinkEl.setAttribute("href", "#");
     cityHistoryLinkEl.className = "history-link";
     cityHistoryLinkEl.textContent = city;
+    cityHistoryLinkEl.addEventListener("click", eventHandler);
     cityHistoryListItemEl.appendChild(cityHistoryLinkEl);
     cityHistoryListEl.appendChild(cityHistoryListItemEl);
-    cityHistoryLinkEl.addEventListener("click", eventHandler);
+
 };
 
 var getWeather = function(city) {
