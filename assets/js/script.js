@@ -8,6 +8,7 @@ var loadHistory = function(){
     cities = JSON.parse(localStorage.getItem("cities"));
 
     if(cities === null){
+        cities = [];
         return false;
     }
 
