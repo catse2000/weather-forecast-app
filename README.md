@@ -26,3 +26,9 @@
 * Display forecast for 5 days
 
 ### Store cities searched in local history
+* Created array to hold search history
+* Created load function to load previous history
+* Created add function to push new values to array
+* Created save function to store data in local storage
+
+### Have webpage locate local weather and show information automatically
