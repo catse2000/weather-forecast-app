@@ -7,6 +7,52 @@ var cities = [];
 
 //called when application loads
 var loadHistory = function(){
+    //check if the geolocation API exists
+    if (navigator.geolocation){
+        // Request the current position
+        navigator.geolocation.getCurrentPosition(getPosSuccess, getPosErr);
+    }
+    else{
+        alert("GeoLocation does not work on this browser");
+    }
+
+    function getPosSuccess(pos){
+        var geoLat = pos.coords.latitude.toFixed(5);
+        var geoLng = pos.coords.longitude.toFixed(5);
+        var geoAcc = pos.coords.accuracy.toFixed(1);
+        var location = "https://nominatim.openstreetmap.org/reverse?lat=" + geoLat + "&lon=" + geoLng + "&zoom=10&format=json";
+        
+        fetch(location).then(function(response){
+            if(response.ok){
+                response.json().then(function(data){
+                    getWeather(data.address.city);
+                })
+            }
+            else{
+                alert("Error: " + response.statusText);
+            }
+        })
+        .catch(function(error){
+            alert("Unable to retrieve Weather Data for your area at this time");
+        })
+    };
+
+    function getPosErr(err){
+        switch (err.code){
+            case err.PERMISSION_DENIED:
+                alert("User denied the request for Geolocation");
+                break;
+            case err.POSITION_UNAVAILABLE:
+                alert("Location information is unavailable.");
+                break;
+            case err.TIMEOUT:
+                alert("The request to get user location timed out.");
+                break;
+            default:
+                alert("An unknown error occurred.");
+        }
+    }
+
     cities = JSON.parse(localStorage.getItem("cities")); // pull local storage and place in array
 
     if(cities === null){ //check if storage is empty
@@ -19,7 +65,10 @@ var loadHistory = function(){
             addCityHistory(cities[i]);
         }
     }
+
+    
 };
+    
 
 // generates <li> elements and appends to <ul> element on index.html to show history of cities searched
 var addCityHistory = function (city){
@@ -40,7 +89,6 @@ var addCityHistory = function (city){
 // populates today's weather based on city entered
 var getWeather = function(city) {
     //format the weather link
-    //generate url for present weather
     var apiUrlPresent = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=9e1fdaa540fdf17e456714b519cc5694";
     //generate url for future weather
     var apiUrlFuture = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=9e1fdaa540fdf17e456714b519cc5694";
@@ -49,6 +97,7 @@ var getWeather = function(city) {
     fetch(apiUrlPresent).then(function(response){
         if(response.ok){
             response.json().then(function(data){
+                console.log(data);
                 displayPresentWeather(data, city);
             });
         }
@@ -257,6 +306,7 @@ var storeHistory = function(cityList){
 // gather city from input and push to getWeather() function
 var eventHandler = function(){
     var city = event.target.textContent;
+    //generate url for present weather
     getWeather(city);
 };
 
